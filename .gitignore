@@ -13,3 +13,6 @@
 bin
 .classpath
 *.log
+reviewer-web.iml
+.idea
+target

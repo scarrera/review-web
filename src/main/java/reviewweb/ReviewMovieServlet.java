@@ -39,20 +39,20 @@ public class ReviewMovieServlet extends HttpServlet {
 			response.sendRedirect("index.jsp");
 		} else {
 			logger.info("User token successfully retrieved from session; proceeding to retrieve movie id, license id and reviewer action from request");
-			if (request.getAttribute("movieId") == null
-					|| request.getAttribute("licenseId") == null
-					|| request.getAttribute("licenseId") == null) {
+			if (request.getParameter("movieId") == null
+					|| request.getParameter("licenseId") == null
+					|| request.getParameter("licenseId") == null) {
 				logger.error("Null values retrieved from request");
 				response.sendRedirect("error.jsp");
 			} else {
 				logger.info("Values successfully retrieved from request; proceeding to parse ids to long");
 				try {
 					long movieId = Long.parseLong((String) request
-							.getAttribute("movieId"));
+							.getParameter("movieId"));
 					long licenseId = Long.parseLong((String) request
-							.getAttribute("licenseId"));
+							.getParameter("licenseId"));
 					logger.info("Successfully parsed ids to long; proceeding to check type of review action");
-					String action = (String) request.getAttribute("action");
+					String action = (String) request.getParameter("action");
 					if (action == "approve") {
 						logger.info("Proceeding to approve license for movie");
 						try {
@@ -81,6 +81,16 @@ public class ReviewMovieServlet extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	/**
+	 * reviewManager attribute setter
+	 * 
+	 * @param reviewManager
+	 *            to set
+	 */
+	public void setReviewManager(ReviewManager reviewManager) {
+		this.reviewManager = reviewManager;
 	}
 
 }
