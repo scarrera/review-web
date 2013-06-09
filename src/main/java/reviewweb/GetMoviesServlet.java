@@ -19,11 +19,9 @@ import edu.umflix.authenticationhandler.exceptions.InvalidTokenException;
 import edu.umflix.model.Movie;
 
 public class GetMoviesServlet extends HttpServlet {
+
 	@EJB(beanName = "ReviewManager")
 	ReviewManager reviewManager;
-
-	private String token;
-	private String email;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -32,22 +30,23 @@ public class GetMoviesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		token = (String) session.getAttribute("userToken");
-		email = (String) session.getAttribute("userEmail");
-		if (email == null || token == null)
-			response.sendRedirect("/index.jsp");
+		String token = (String) session.getAttribute("userToken");
+		if (token == null)
+			response.sendRedirect("index.jsp");
 		else {
 			try {
 				List<Movie> movies = reviewManager.getMovieToReview(token);
-				Type listType = new TypeToken<List<Movie>>() {}.getType();
+				Type listType = new TypeToken<List<Movie>>() {
+				}.getType();
 				String json = "";
-				if(movies != null && movies.size() != 0){
+				if (movies != null && movies.size() != 0) {
 					json = new Gson().toJson(movies, listType);
 					request.setAttribute("moviesAwaitingReview", json);
-					request.getRequestDispatcher("/movieList.jsp").forward(request, response);
+					request.getRequestDispatcher("movieList.jsp").forward(
+							request, response);
 				}
 			} catch (InvalidTokenException e) {
-				response.sendRedirect("/index.jsp");
+				response.sendRedirect("index.jsp");
 			}
 		}
 	}
