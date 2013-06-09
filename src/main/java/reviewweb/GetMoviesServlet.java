@@ -13,7 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import reviewweb.adapters.MovieAdapter;
+
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import edu.um.umflix.reviewmanager.ReviewManager;
@@ -54,7 +58,10 @@ public class GetMoviesServlet extends HttpServlet {
 				}.getType();
 				String json = "";
 				if (movies != null && movies.size() != 0) {
-					json = new Gson().toJson(movies, listType);
+					GsonBuilder gsonBuilder = new GsonBuilder();
+					Gson gson = gsonBuilder.registerTypeAdapter(Movie.class,
+							new MovieAdapter()).create();
+					json = gson.toJson(movies, listType);
 					request.setAttribute("moviesAwaitingReview", json);
 					logger.info("Movie list parsed to json and added to variable in request");
 				} else
@@ -69,4 +76,13 @@ public class GetMoviesServlet extends HttpServlet {
 			}
 		}
 	}
+
+	/**
+	 * reviewManager attribute setter
+	 * @param reviewManager to set
+	 */
+	public void setReviewManager(ReviewManager reviewManager) {
+		this.reviewManager = reviewManager;
+	}
+	
 }

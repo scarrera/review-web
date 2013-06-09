@@ -90,4 +90,35 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * userManager attribute setter
+	 * 
+	 * @param userManager
+	 *            to set
+	 */
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+
+	/**
+	 * authenticationHandler setter
+	 * 
+	 * @param authenticationHandler
+	 *            to set
+	 */
+	public void setAuthenticationHandler(
+			AuthenticationHandler authenticationHandler) {
+		this.authenticationHandler = authenticationHandler;
+	}
+
+	/**
+	 * roleDao setter
+	 * 
+	 * @param roleDao
+	 *            to set
+	 */
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
 }

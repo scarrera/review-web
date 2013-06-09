@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page
-	import="edu.umflix.model.Movie,edu.umflix.model.License,com.google.gson.Gson,java.util.List,java.lang.reflect.Type,com.google.gson.reflect.TypeToken"%>
+	import="edu.umflix.model.Movie,edu.umflix.model.License,com.google.gson.Gson,java.util.List,java.lang.reflect.Type,com.google.gson.reflect.TypeToken,com.google.gson.GsonBuilder,com.google.gson.Gson,reviewweb.adapters.MovieAdapter"%>
 <%
 	String token = (String) session.getAttribute("userToken");
 	String email = (String) session.getAttribute("userEmail");
@@ -13,8 +13,12 @@
 	Type listType = new TypeToken<List<Movie>>() {
 	}.getType();
 	String json = (String) request.getParameter("moviesAwaitingReview");
-	if (json != "")
-		movies = new Gson().fromJson(json, listType);
+	if (json != "") {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson = gsonBuilder.registerTypeAdapter(Movie.class,
+				new MovieAdapter()).create();
+		movies = gson.fromJson(json, listType);
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
