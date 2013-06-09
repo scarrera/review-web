@@ -12,3 +12,4 @@
 .project
 bin
 .classpath
+*.log
