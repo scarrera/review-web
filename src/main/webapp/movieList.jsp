@@ -42,7 +42,7 @@
 						+ "</h3>");
 				out.println("<ul>");
 				for (License license : movie.getLicenses())
-					out.println("<li><form action='license.jsp' method='post'> "
+					out.println("<li><form action='licenseDetail.jsp' method='post'> "
 							+ license.getName()
 							+ " <input type='hidden' name='movieId' value='"
 							+ movie.getId()
