@@ -18,7 +18,7 @@ import edu.umflix.model.Role;
 import edu.umflix.model.User;
 import edu.umflix.persistence.RoleDao;
 import edu.umflix.usermanager.UserManager;
-import edu.umflix.usermanager.exceptions.InvalidUserException;
+import edu.umflix.authenticationhandler.exceptions.InvalidUserException;
 
 /**
  * Servlet in charge of handling user authentication and authorization
@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
 			logger.error("Attempted to check if user was part of an invalid role");
 			response.sendRedirect("error.jsp");
 		}
-	}
+    }
 
 	/**
 	 * userManager attribute setter
