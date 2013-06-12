@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.um.umflix.reviewmanager.exceptions.NotReviewerException;
 import org.apache.log4j.Logger;
 
 import reviewweb.adapters.MovieAdapter;
@@ -73,8 +74,11 @@ public class GetMoviesServlet extends HttpServlet {
 			} catch (InvalidTokenException e) {
 				logger.error("User asked for movie list with an invalid token");
 				response.sendRedirect("error.jsp");
-			}
-		}
+			} catch (NotReviewerException e) {
+                logger.error("User asked for movie list without being a reviewer");
+                response.sendRedirect("error.jsp");
+            }
+        }
 	}
 
 	/**

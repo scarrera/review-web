@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.um.umflix.reviewmanager.exceptions.NotReviewerException;
 import org.apache.log4j.Logger;
 
 import edu.um.umflix.reviewmanager.ReviewManager;
@@ -62,8 +63,11 @@ public class ReviewMovieServlet extends HttpServlet {
 						} catch (InvalidTokenException e) {
 							logger.error("Attempted to approve license for movie with an invalid token");
 							response.sendRedirect("index.jsp");
-						}
-					}
+						} catch (NotReviewerException e) {
+                            logger.error("Attempted to approve license for movie without being a reviewer");
+                            response.sendRedirect("index.jsp");
+                        }
+                    }
 					if (action == "reject") {
 						logger.info("Proceeding to reject license for movie");
 						try {
@@ -73,8 +77,11 @@ public class ReviewMovieServlet extends HttpServlet {
 						} catch (InvalidTokenException e) {
 							logger.error("Attempted to reject license for movie with an invalid token");
 							response.sendRedirect("index.jsp");
-						}
-					}
+						} catch (NotReviewerException e) {
+                            logger.error("Attempted to reject license for movie without being a reviewer");
+                            response.sendRedirect("index.jsp");
+                        }
+                    }
 				} catch (NumberFormatException e) {
 					logger.error("Could not parse id values in request  to long");
 					response.sendRedirect("error.jsp");

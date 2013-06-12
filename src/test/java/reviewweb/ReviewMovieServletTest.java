@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.um.umflix.reviewmanager.exceptions.NotReviewerException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +71,7 @@ public class ReviewMovieServletTest {
 
 	@Test
 	public void testNullAttributesInRequest() throws ServletException,
-			IOException, InvalidTokenException {
+            IOException, InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn("validToken");
 		when(request.getParameter(anyString())).thenReturn(null);
 		servlet.doPost(request, response);
@@ -84,7 +85,7 @@ public class ReviewMovieServletTest {
 
 	@Test
 	public void testSuccessfulApproveLicenseForMovie() throws ServletException,
-			IOException, InvalidTokenException {
+            IOException, InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn("validToken");
 		when(request.getParameter("movieId")).thenReturn("1");
 		when(request.getParameter("licenseId")).thenReturn("1");
@@ -100,7 +101,7 @@ public class ReviewMovieServletTest {
 
 	@Test
 	public void testSuccessfulRejectLicenseForMovie() throws ServletException,
-			IOException, InvalidTokenException {
+            IOException, InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn("validToken");
 		when(request.getParameter("movieId")).thenReturn("1");
 		when(request.getParameter("licenseId")).thenReturn("1");

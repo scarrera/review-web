@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.um.umflix.reviewmanager.exceptions.NotReviewerException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,7 +62,7 @@ public class GetMoviesServletTest {
 
 	@Test
 	public void testNoTokenInSession() throws ServletException, IOException,
-			InvalidTokenException {
+            InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn(null);
 
 		servlet.doGet(request, response);
@@ -71,7 +72,7 @@ public class GetMoviesServletTest {
 
 	@Test
 	public void testSuccessfulMovieRetrievalEmptyList()
-			throws ServletException, IOException, InvalidTokenException {
+            throws ServletException, IOException, InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn("validToken");
 		List<Movie> movies = new ArrayList<Movie>();
 		when(reviewManager.getMovieToReview("validToken")).thenReturn(movies);
@@ -84,7 +85,7 @@ public class GetMoviesServletTest {
 
 	@Test
 	public void testSuccessfulMovieRetrievalNonEmptyList()
-			throws ServletException, IOException, InvalidTokenException {
+            throws ServletException, IOException, InvalidTokenException, NotReviewerException {
 		when(session.getAttribute("userToken")).thenReturn("validToken");
 		List<Movie> movies = new ArrayList<Movie>();
 		Movie movie1 = mock(Movie.class);
