@@ -4,6 +4,7 @@ Installation instruction:
 	- Umflix persistence
 	- user-manager
 	- review-manager
+	- authenticationHandler
 
 2) Deploy project war
 
